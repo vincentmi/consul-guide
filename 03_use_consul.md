@@ -47,4 +47,5 @@ Available commands are:
     watch          Watch for changes in Consul
 ```
 
+如果你得到一个```consul not be found```的错误,你的```PATH```可能没有正确设置.请返回检查你的```consul```的安装路径是否包含在```PATH```中.
 
