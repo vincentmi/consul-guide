@@ -20,6 +20,31 @@ brew install consul
 
 ## 验证安装
 
+完成安装后,通过打开一个新终端窗口检查```consul```安装是否成功.通过执行 ```consul```你应该看到类似下面的输出
 
+```
+[root@hdp2 ~]# consul
+usage: consul [--version] [--help] <command> [<args>]
+
+Available commands are:
+    agent          Runs a Consul agent
+    configtest     Validate config file
+    event          Fire a new event
+    exec           Executes a command on Consul nodes
+    force-leave    Forces a member of the cluster to enter the "left" state
+    info           Provides debugging information for operators
+    join           Tell Consul agent to join cluster
+    keygen         Generates a new encryption key
+    keyring        Manages gossip layer encryption keys
+    leave          Gracefully leaves the Consul cluster and shuts down
+    lock           Execute a command holding a lock
+    maint          Controls node or service maintenance mode
+    members        Lists the members of a Consul cluster
+    monitor        Stream logs from a Consul agent
+    reload         Triggers the agent to reload configuration files
+    rtt            Estimates network round trip time between nodes
+    version        Prints the Consul version
+    watch          Watch for changes in Consul
+```
 
 
