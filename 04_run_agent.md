@@ -61,7 +61,8 @@ hdp2  10.0.0.52:8301  alive   server  0.6.4  2         dc1
 ```
 
 这个输出显示我们自己的节点.运行的地址,健康状态,自己在集群中的角色,版本信息.添加```-detialed```选项可以查看到额外的信息.
-The output shows our own node, the address it is running on, its health state, its role in the cluster, and some version information. Additional metadata can be viewed by providing the -detailed flag.
+
+```members```命令的输出是基于[gossip](https://www.consul.io/docs/internals/gossip.html)协议是最终一致的.
 
 The output of the members command is based on the gossip protocol and is eventually consistent. That is, at any point in time, the view of the world as seen by your local agent may not exactly match the state on the servers. For a strongly consistent view of the world, use the HTTP API as it forwards the request to the Consul servers:
 
