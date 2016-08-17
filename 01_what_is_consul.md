@@ -23,6 +23,4 @@ Agent与一个和多个Consul Server 进行交互.Consul Server 用于存放和�
 
 你基础设施中需要发现其他服务的组件可以查询任何一个Consul 的server或者 agent.Agent会自动转发请求到server .
 
-每个数据中运行了一个Consul server集群.当一个跨数据中心
-
-Each datacenter runs a cluster of Consul servers. When a cross-datacenter service discovery or configuration request is made, the local Consul servers forward the request to the remote datacenter and return the result.
+每个数据中运行了一个Consul server集群.当一个跨数据中心的服务发现和配置请求创建时.本地Consul Server转发请求到远程的数据中心并返回结果.
