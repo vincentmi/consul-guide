@@ -70,5 +70,14 @@ hdp2  10.0.0.52:8301  alive   server  0.6.4  2         dc1
 ```
 除了HTTP API ,DNS 接口也可以用来查询节点.注意,你必须确定将你的DNS查询指向Consul agent的DNS服务器,这个默认运行在 ```8600```端口.DNS条目的格式(例如:"Armons-MacBook-Air.node.consul")将在后面讲到.
 
+```
+$ dig @127.0.0.1 -p 8600 Armons-MacBook-Air.node.consul
+...
 
+;; QUESTION SECTION:
+;Armons-MacBook-Air.node.consul.    IN  A
+
+;; ANSWER SECTION:
+Armons-MacBook-Air.node.consul. 0 IN    A   172.20.20.11
+```
 
