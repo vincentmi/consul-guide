@@ -64,3 +64,11 @@ hdp2  10.0.0.52:8301  alive   server  0.6.4  2         dc1
 
 ```members```命令的输出是基于[gossip](https://www.consul.io/docs/internals/gossip.html)协议是最终一致的.意味着,在任何时候,通过你本地agent看到的结果可能不是准确匹配server的状态.为了查看到一致的信息,使用HTTP API(将自动转发)到Consul Server上去进行查询:
 
+```
+[root@hdp2 ~]#  curl localhost:8500/v1/catalog/nodes
+[{"Node":"hdp2","Address":"10.0.0.52","TaggedAddresses":{"wan":"10.0.0.52"},"CreateIndex":3,"ModifyIndex":4}]
+```
+除了HTTP API ,DNS 接口也可以用来查询节点.注意,你必须确定将你的DNS查询指向Consul agent的DNS服务器,这个默认运行在 ```8600```端口.DNS条目的格式(例如:"Armons-MacBook-Air.node.consul")将在后面讲到.
+
+
+
