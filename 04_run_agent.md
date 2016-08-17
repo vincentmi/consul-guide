@@ -81,3 +81,12 @@ $ dig @127.0.0.1 -p 8600 Armons-MacBook-Air.node.consul
 Armons-MacBook-Air.node.consul. 0 IN    A   172.20.20.11
 ```
 
+## 停止Agent
+
+你可以使用Ctrl-C 优雅的关闭Agent. 中断Agent之后你可以看到他离开了集群并关闭.
+
+在退出中,Consul提醒其他集群成员,这个节点离开了.如果你强行杀掉进程.集群的其他成员应该能检测到这个节点失效了.当一个成员离开,他的服务和检测也会从目录中移除.当一个成员失效了,他的健康状况被简单的标记为危险,但是不会从目录中移除.Consul会自动尝试对失效的节点进行重连.允许他从某些网络条件下恢复过来.离开的节点则不会再继续联系.
+
+此外,如果一个agent作为一个服务器,一个优雅的离开是很重要的,可以避免引起潜在的可用性故障影响达成[一致性协议](https://www.consul.io/docs/internals/consensus.html).
+
+查看[这里](https://www.consul.io/docs/internals/consensus.html)了解添加和移除server.
