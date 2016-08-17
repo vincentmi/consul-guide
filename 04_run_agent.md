@@ -53,3 +53,10 @@
 ## 集群成员
 
 新开一个终端窗口运行```consul members```, 你可以看到Consul集群的成员.下一节我们将讲到加入集群.现在你应该只能看到一个成员,就是你自己:
+
+```
+[root@hdp2 ~]# consul members
+Node  Address         Status  Type    Build  Protocol  DC
+hdp2  10.0.0.52:8301  alive   server  0.6.4  2         dc1
+```
+
