@@ -10,5 +10,6 @@
 * [健康检查](07_health_check.md)
 * [键值数据存储](08_kv_data.md)
 * [WEB管理界面](09_webui.md)
-* [资源](010_next.md)
+* [资源](10_next.md)
+* [Consul Template](11_consul_template.md)
 
