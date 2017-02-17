@@ -48,11 +48,11 @@
 
 如你所见,Consul Agent 启动并输出了一些日志数据.从这些日志中你可以看到,我们的agent运行在server模式并且声明作为一个集群的领袖.额外的本地镀锌被标记为一个健康的成员.
 
-> OS X用户注意: Consul 使用你的主机hostname作为默认的节点名字.如果你的主机名包含时间,到这个节点的DNS查询将不会工作.为了避免这个情况,使用```-node```参数来明确的设置node名.
+> OS X用户注意: Consul 使用你的主机hostname作为默认的节点名字.如果你的主机名包含时间,到这个节点的DNS查询将不会工作.为了避免这个情况,使用`-node`参数来明确的设置node名.
 
 ## 集群成员
 
-新开一个终端窗口运行```consul members```, 你可以看到Consul集群的成员.下一节我们将讲到加入集群.现在你应该只能看到一个成员,就是你自己:
+新开一个终端窗口运行`consul members`, 你可以看到Consul集群的成员.下一节我们将讲到加入集群.现在你应该只能看到一个成员,就是你自己:
 
 ```
 [root@hdp2 ~]# consul members
@@ -60,15 +60,16 @@ Node  Address         Status  Type    Build  Protocol  DC
 hdp2  10.0.0.52:8301  alive   server  0.6.4  2         dc1
 ```
 
-这个输出显示我们自己的节点.运行的地址,健康状态,自己在集群中的角色,版本信息.添加```-detialed```选项可以查看到额外的信息.
+这个输出显示我们自己的节点.运行的地址,健康状态,自己在集群中的角色,版本信息.添加`-detailed`选项可以查看到额外的信息.
 
-```members```命令的输出是基于[gossip](https://www.consul.io/docs/internals/gossip.html)协议是最终一致的.意味着,在任何时候,通过你本地agent看到的结果可能不是准确匹配server的状态.为了查看到一致的信息,使用HTTP API(将自动转发)到Consul Server上去进行查询:
+`members`命令的输出是基于[gossip](https://www.consul.io/docs/internals/gossip.html)协议是最终一致的.意味着,在任何时候,通过你本地agent看到的结果可能不是准确匹配server的状态.为了查看到一致的信息,使用HTTP API\(将自动转发\)到Consul Server上去进行查询:
 
 ```
 [root@hdp2 ~]#  curl localhost:8500/v1/catalog/nodes
 [{"Node":"hdp2","Address":"10.0.0.52","TaggedAddresses":{"wan":"10.0.0.52"},"CreateIndex":3,"ModifyIndex":4}]
 ```
-除了HTTP API ,DNS 接口也可以用来查询节点.注意,你必须确定将你的DNS查询指向Consul agent的DNS服务器,这个默认运行在 ```8600```端口.DNS条目的格式(例如:"Armons-MacBook-Air.node.consul")将在后面讲到.
+
+除了HTTP API ,DNS 接口也可以用来查询节点.注意,你必须确定将你的DNS查询指向Consul agent的DNS服务器,这个默认运行在 `8600`端口.DNS条目的格式\(例如:"Armons-MacBook-Air.node.consul"\)将在后面讲到.
 
 ```
 $ dig @127.0.0.1 -p 8600 Armons-MacBook-Air.node.consul
@@ -90,3 +91,4 @@ Armons-MacBook-Air.node.consul. 0 IN    A   172.20.20.11
 此外,如果一个agent作为一个服务器,一个优雅的离开是很重要的,可以避免引起潜在的可用性故障影响达成[一致性协议](https://www.consul.io/docs/internals/consensus.html).
 
 查看[这里](https://www.consul.io/docs/internals/consensus.html)了解添加和移除server.
+
