@@ -1136,6 +1136,7 @@ This mode is best-explained through example. Consider a simple application that 
 $ consul-template \
     -template="/tmp/config.ctmpl:/tmp/server.conf" \
     -exec="/bin/my-server -config /tmp/server.conf"
+```
 
 When Consul Template starts, it will pull the required dependencies and populate the /tmp/server.conf, which the my-server binary consumes. After that template is rendered completely the first time, Consul Template spawns and manages a child process. When any of the list templates change, Consul Template will send the configurable reload signal to that child process. If no reload signal is provided, Consul Template will kill and restart the process. Additionally, in this mode, Consul Template will proxy any signals it receives to the child process. This enables a scheduler to control the lifecycle of the process and also eases the friction of running inside a container.
 
