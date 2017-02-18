@@ -872,37 +872,37 @@ Takes the argument as a regular expression and will return true if it matches on
 
 Takes the argument as a regular expression and replaces all occurrences of the regex with the given string. As in go, you can use variables like $1 to refer to subexpressions in the replacement string.
 
-`````
+```
 {{"foo.bar" | regexReplaceAll "foo([.a-z]+)" "$1"}}
-`````
+```
 
 ##### replaceAll
 
 Takes the argument as a string and replaces all occurrences of the given string with the given string.
 
-`````
+```
 {{"foo.bar" | replaceAll "." "_"}}
-`````
+```
 
 This function can be chained with other functions as well:
 
-`````
+```
 {{service "web"}}{{.Name | replaceAll ":" "_"}}{{end}}
-`````
+```
 
 ##### split
 
 Splits the given string on the provided separator:
 
-````
+```
 {{"foo\nbar\n" | split "\n"}}
-````
+```
 
 This can be combined with chained and piped with other functions:
 
-````
+```
 {{key "foo" | toUpper | split "\n" | join ","}}
-````
+```
 
 ##### timestamp
 
