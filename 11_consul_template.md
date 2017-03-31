@@ -22,7 +22,7 @@ consul-template -h
 
 ```CLI```接口支持上面出现的所有选项.
 
-查询 ```demo.consul.io```这个```Consul```实例(agent).渲染模板文件 ```/tmp/template.ctmpl``` 保存到 ``` /tmp/result```, 运行```Consul-template```服务直到直到手动结束:
+查询 ```demo.consul.io``` 这个 ```Consul```实例(agent).渲染模板文件 ```/tmp/template.ctmpl``` 保存到 ``` /tmp/result```, 运行```Consul-template``` 服务直到直到手动结束:
 
 ```
 consul-template \
