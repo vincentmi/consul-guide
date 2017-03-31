@@ -447,6 +447,8 @@ maxconns 12
 
 可以使用如下字段:
 
+
+```
 LeaseID - the unique lease identifier
 LeaseDuration - the number of seconds the lease is valid
 Renewable - if the secret is renewable
@@ -463,18 +465,19 @@ The parameters must be key=value pairs, and each pair must be its own argument t
 
 {{ secret "path/" "a=b" "c=d" "e=f" }}
 Please always consider the security implications of having the contents of a secret in plain-text on disk. If an attacker is able to get access to the file, they will have access to plain-text secrets.
-
+```
 Please note that Vault does not support blocking queries. As a result, Consul Template will not immediately reload in the event a secret is changed as it does with Consul's key-value store. Consul Template will fetch a new secret at half the lease duration of the original secret. For example, most items in Vault's generic secret backend have a default 30 day lease. This means Consul Template will renew the secret every 15 days. As such, it is recommended that a smaller lease duration be used when generating the initial secret to force Consul Template to renew more often.
 
 ##### secrets #####
 
 Query Vault to list the secrets at the given path. Please note this requires Vault 0.5+ and the endpoint you want to list secrets must support listing. Not all endpoints support listing. The result is the list of secret names as strings.
-
+```
 {{range secrets "secret/"}}{{.}}{{end}}
+```
 The trailing slash is optional in the template, but the generated secret dependency will always have a trailing slash in log output.
 
 To iterate and list over every secret in the generic secret backend in Vault, for example, you would need to do something like this:
-
+```
 {{range secrets "secret/"}}
 {{with secret (printf "secret/%s" .)}}
 {{range $k, $v := .Data}}
@@ -482,6 +485,7 @@ To iterate and list over every secret in the generic secret backend in Vault, fo
 {{end}}
 {{end}}
 {{end}}
+```
 You should probably never do this. Please also note that Vault does not support blocking queries. To understand the implications, please read the note at the end of the secret function.
 
 ##### service #####
@@ -868,63 +872,77 @@ Takes the argument as a regular expression and will return true if it matches on
 
 Takes the argument as a regular expression and replaces all occurrences of the regex with the given string. As in go, you can use variables like $1 to refer to subexpressions in the replacement string.
 
-`````
+```
 {{"foo.bar" | regexReplaceAll "foo([.a-z]+)" "$1"}}
-`````
+```
 
 ##### replaceAll
 
 Takes the argument as a string and replaces all occurrences of the given string with the given string.
 
-`````
+```
 {{"foo.bar" | replaceAll "." "_"}}
-`````
+```
 
 This function can be chained with other functions as well:
 
-`````
+```
 {{service "web"}}{{.Name | replaceAll ":" "_"}}{{end}}
-`````
+```
 
 ##### split
 
 Splits the given string on the provided separator:
 
-````
+```
 {{"foo\nbar\n" | split "\n"}}
-````
+```
 
 This can be combined with chained and piped with other functions:
 
-````
+```
 {{key "foo" | toUpper | split "\n" | join ","}}
-````
+```
 
 ##### timestamp
 
 Returns the current timestamp as a string (UTC). If no arguments are given, the result is the current RFC3339 timestamp:
 
+```
 {{timestamp}} // e.g. 1970-01-01T00:00:00Z
+```
 If the optional parameter is given, it is used to format the timestamp. The magic reference date Mon Jan 2 15:04:05 -0700 MST 2006 can be used to format the date as required:
 
+```
 {{timestamp "2006-01-02"}} // e.g. 1970-01-01
+```
+
 See Go's time.Format() for more information.
 
 As a special case, if the optional parameter is "unix", the unix timestamp in seconds is returned as a string.
 
+```
 {{timestamp "unix"}} // e.g. 0
+```
+
 toJSON
 
 Takes the result from a tree or ls call and converts it into a JSON object.
 
+```
 {{ tree "config" | explode | toJSON }} // e.g. {"admin":{"port":1234},"maxconns":5,"minconns":2}
+```
+
 Note: This functionality should be considered final. If you need to manipulate keys, combine values, or perform mutations, that should be done outside of Consul. In order to keep the API scope limited, we likely will not accept Pull Requests that focus on customizing the toJSON functionality.
 
 toJSONPretty
 
 Takes the result from a tree or ls call and converts it into a pretty-printed JSON object, indented by two spaces.
 
+```
 {{ tree "config" | explode | toJSONPretty }}
+```
+```
 /*
 {
   "admin": {
@@ -934,33 +952,44 @@ Takes the result from a tree or ls call and converts it into a pretty-printed JS
   "minconns": 2,
 }
 */
+```
 Note: This functionality should be considered final. If you need to manipulate keys, combine values, or perform mutations, that should be done outside of Consul. In order to keep the API scope limited, we likely will not accept Pull Requests that focus on customizing the toJSONPretty functionality.
 
 toLower
 
 Takes the argument as a string and converts it to lowercase.
 
+```
 {{key "user/name" | toLower}}
+```
+
 See Go's strings.ToLower() for more information.
 
 toTitle
 
 Takes the argument as a string and converts it to titlecase.
 
+```
 {{key "user/name" | toTitle}}
+```
+
 See Go's strings.Title() for more information.
 
 toUpper
 
 Takes the argument as a string and converts it to uppercase.
 
+```
 {{key "user/name" | toUpper}}
+```
+
 See Go's strings.ToUpper() for more information.
 
 toYAML
 
 Takes the result from a tree or ls call and converts it into a pretty-printed YAML object, indented by two spaces.
 
+```
 {{ tree "config" | explode | toYAML }}
 /*
 admin:
@@ -968,6 +997,7 @@ admin:
 maxconns: 5
 minconns: 2
 */
+```
 Note: This functionality should be considered final. If you need to manipulate keys, combine values, or perform mutations, that should be done outside of Consul. In order to keep the API scope limited, we likely will not accept Pull Requests that focus on customizing the toYAML functionality.
 
 Math Functions
@@ -978,36 +1008,60 @@ add
 
 Returns the sum of the two values.
 
+```
 {{ add 1 2 }} // 3
+```
+
 This can also be used with a pipe function.
 
+```
 {{ 1 | add 2 }} // 3
+```
+
 subtract
 
 Returns the difference of the second value from the first.
 
+```
 {{ subtract 2 5 }} // 3
+```
+
 This can also be used with a pipe function.
 
+```
 {{ 5 | subtract 2 }}
+```
+
 Please take careful note of the order of arguments.
 
 multiply
 
 Returns the product of the two values.
 
+```
 {{ multiply 2 2 }} // 4
+```
+
 This can also be used with a pipe function.
 
+```
 {{ 2 | multiply 2 }} // 4
+```
+
 divide
 
 Returns the division of the second value from the first.
 
+```
 {{ divide 2 10 }} // 5
+```
+
 This can also be used with a pipe function.
 
+```
 {{ 10 | divide 2 }} // 5
+```
+
 Please take careful note of the order or arguments.
 
 Plugins
@@ -1018,7 +1072,9 @@ For some use cases, it may be necessary to write a plugin that offloads work to 
 
 Consul Template plugins must have the following API:
 
+```
 $ NAME [INPUT...]
+```
 NAME - the name of the plugin - this is also the name of the binary, either a full path or just the program name. It will be executed in a shell with the inherited PATH so e.g. the plugin cat will run the first executable cat that is found on the PATH.
 INPUT - input from the template - this will always be JSON if provided
 Important Notes
@@ -1027,7 +1083,7 @@ Plugins execute user-provided scripts and pass in potentially sensitive data fro
 Plugin output must be returned as a string on stdout. Only stdout will be parsed for output. Be sure to log all errors, debugging messages onto stderr to avoid errors when Consul Template returns the value.
 Always exit 0 or Consul Template will assume the plugin failed to execute
 Ensure the empty input case is handled correctly (see Multi-phase execution)
-Data piped into the plugin is appended after any parameters given explicitly (eg {{ "sample-data" | plugin "my-plugin" "some-parameter"}} will call my-plugin some-parameter sample-data)
+Data piped into the plugin is appended after any parameters given explicitly (eg ```{{ "sample-data" | plugin "my-plugin" "some-parameter"}}``` will call my-plugin some-parameter sample-data)
 Here is a sample plugin in a few different languages that removes any JSON keys that start with an underscore and returns the JSON string:
 
 ```
@@ -1076,9 +1132,12 @@ As of version 0.16.0, Consul Template has the ability to maintain an arbitrary c
 
 This mode is best-explained through example. Consider a simple application that reads a configuration file from disk and spawns a server from that configuration.
 
+```
 $ consul-template \
     -template="/tmp/config.ctmpl:/tmp/server.conf" \
     -exec="/bin/my-server -config /tmp/server.conf"
+```
+
 When Consul Template starts, it will pull the required dependencies and populate the /tmp/server.conf, which the my-server binary consumes. After that template is rendered completely the first time, Consul Template spawns and manages a child process. When any of the list templates change, Consul Template will send the configurable reload signal to that child process. If no reload signal is provided, Consul Template will kill and restart the process. Additionally, in this mode, Consul Template will proxy any signals it receives to the child process. This enables a scheduler to control the lifecycle of the process and also eases the friction of running inside a container.
 
 A common point of confusion is that the command string behaves the same as the shell; it does not. In the shell, when you run foo | bar or foo > bar, that is actually running as a subprocess of your shell (bash, zsh, csh, etc.). When Consul Template spawns the exec process, it runs outside of your shell. This behavior is different from when Consul Template executes the template-specific reload command. If you want the ability to pipe or redirect in the exec command, you will need to spawn the process in subshell, for example:
