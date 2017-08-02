@@ -22,11 +22,11 @@ vagrant@n2:~$ echo '{"service": {"name": "web", "tags": ["rails"], "port": 80,
   >/etc/consul.d/web.json
 ```
 
-第一个定义增加了一个主机级别的检查,名字为 "ping" . 这个检查每30秒执行一次,执行 ```ping -c1 163.com```. 在基于脚本的健康检查中,脚本运行在与Consul进程一样的用户下.如果这个命令以非0值退出的话这个节点就会被标记为不健康.这是所有基于脚本的健康检查的约定.
+第一个定义增加了一个主机级别的检查,名字为 "ping" . 这个检查每30秒执行一次,执行 `ping -c1 163.com`. 在基于脚本的健康检查中,脚本运行在与Consul进程一样的用户下.如果这个命令以非0值退出的话这个节点就会被标记为不健康.这是所有基于脚本的健康检查的约定.
 
-第二个命令定义了名为```web```的服务,添加了一个检查.每十分钟通过curl发送一个请求,确定web服务器可以访问.和主机级别的检查一样.如果脚本以非0值退出则标记为不健康.
+第二个命令定义了名为`web`的服务,添加了一个检查.每十分钟通过curl发送一个请求,确定web服务器可以访问.和主机级别的检查一样.如果脚本以非0值退出则标记为不健康.
 
-现在重启第二个agent或者发送```SIGHUP```信号,你应该可以看到如下的日志内容输出:
+现在重启第二个agent或者发送`SIGHUP`信号,你应该可以看到如下的日志内容输出:
 
 ```
 ==> Reloading configuration...
@@ -39,14 +39,14 @@ vagrant@n2:~$ echo '{"service": {"name": "web", "tags": ["rails"], "port": 80,
 
 ## 检查健康状态
 
-现在我们加入了一些简单的检查.我们能适应HTTP API来检查他们.首先我们检查有哪些失败的检查.使用这个命令(注意:这个命令可以运行在任何节点)
+现在我们加入了一些简单的检查.我们能适应HTTP API来检查他们.首先我们检查有哪些失败的检查.使用这个命令\(注意:这个命令可以运行在任何节点\)
 
 ```
 [root@hdp3 consul.d]# curl http://localhost:8500/v1/health/state/critical
 [{"Node":"hdp3","CheckID":"service:web","Name":"Service 'web' check","Status":"critical","Notes":"","Output":"","ServiceID":"web","ServiceName":"web","CreateIndex":878,"ModifyIndex":878}]
 ```
 
-我们可以看到,只有一个检查我们的```web```服务在```critical```状态
+我们可以看到,只有一个检查我们的`web`服务在`critical`状态
 
 另外,我们可以尝试用DNS查询web服务,Consul将不会返回结果.因为服务不健康.
 
@@ -62,10 +62,10 @@ vagrant@n2:~$ echo '{"service": {"name": "web", "tags": ["rails"], "port": 80,
 ;; WARNING: recursion requested but not available
 
 ;; QUESTION SECTION:
-;web.service.consul.   		IN     	A
+;web.service.consul.           IN         A
 
 ;; AUTHORITY SECTION:
-consul.			0      	IN     	SOA    	ns.consul. postmaster.consul. 1471507354 3600 600 86400 0
+consul.            0          IN         SOA        ns.consul. postmaster.consul. 1471507354 3600 600 86400 0
 
 ;; Query time: 8 msec
 ;; SERVER: 127.0.0.1#8600(127.0.0.1)
@@ -75,4 +75,5 @@ consul.			0      	IN     	SOA    	ns.consul. postmaster.consul. 1471507354 3600 
 
 ## 下一步
 
-在本章,你学到了如何鉴定的添加健康检查.检查定义可以通过配合文件并发送```SIGHUP```到agent进行更新.另外,HTTP API可以用来动态添加,移除和修改检查.API也运行使用 "死亡开关(dead man's swicth)" 一个基于生存时间(TTL)的检查.TTL可以让应用程序更紧密的与Consul集成.将检查的状态加入到业务逻辑的计算.
+在本章,你学到了如何鉴定的添加健康检查.检查定义可以通过配合文件并发送`SIGHUP`到agent进行更新.另外,HTTP API可以用来动态添加,移除和修改检查,以及进行TTL检查.TTL可以让应用程序更紧密的与Consul集成.将检查的状态加入到业务逻辑的计算.
+
