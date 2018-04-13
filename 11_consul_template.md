@@ -20,19 +20,19 @@ consul-template -h
 
 #### 命令行
 
-```CLI```接口支持上面出现的所有选项.
+```CLI``` 接口支持上面出现的所有选项.
 
-查询 ```demo.consul.io``` 这个 ```Consul```实例(agent).渲染模板文件 ```/tmp/template.ctmpl``` 保存到 ``` /tmp/result```, 运行```Consul-template``` 服务直到直到手动结束:
+查询 ```demo.consul.io```  这个  ```Consul``` 实例(agent).渲染模板文件  ```/tmp/template.ctmpl```  保存到  ``` /tmp/result```, 运行```Consul-template``` 服务直到直到手动结束:
 
-```
+```shss
 consul-template \
   -consul demo.consul.io \
   -template "/tmp/template.ctmpl:/tmp/result"
 ```
 
-查询本地的```Consul```实例(agent),一旦模板发生变化渲染模板并重启```Nginx```,如果```Consul```不可用30秒重试一次:
+查询本地的```Consul``` 实例(agent),一旦模板发生变化渲染模板并重启 ```Nginx``` ,如果 ```Consul``` 不可用30秒重试一次:
 
-```
+```sh
 consul-template \
   -consul 127.0.0.1:8500 \
   -template "/tmp/template.ctmpl:/var/www/nginx.conf:service nginx restart" \
@@ -50,7 +50,7 @@ consul-template \
   -template "/tmp/haproxy.ctmpl:/var/haproxy/haproxy.conf"
 ```
 
-查询一个需要权限验证的```Consul```实例,将渲染后的模板输出到控制台而不写入磁盘.在这个例子中```-template```的第二个和第三个参数是必须的但是被忽略了.这个文件将不会被写入磁盘,命令也不会被执行.
+查询一个需要权限验证的 ```Consul``` 实例,将渲染后的模板输出到控制台而不写入磁盘.在这个例子中 ```-template``` 的第二个和第三个参数是必须的但是被忽略了.这个文件将不会被写入磁盘,命令也不会被执行.
 
 ```
 $ consul-template \
@@ -72,7 +72,7 @@ $ consul-template \
   -once
 ```
 
-查询```Consul```并启动一个子进程.模板的变化会发送指令给子进程.详细的说明请查看[这里](https://github.com/hashicorp/consul-template#exec-mode).
+查询 ```Consul``` 并启动一个子进程.模板的变化会发送指令给子进程.详细的说明请查看[这里](https://github.com/hashicorp/consul-template#exec-mode).
 
 ```
 $ consul-template \
@@ -83,7 +83,7 @@ $ consul-template \
 
 #### 配置文件
 
-```Consul-Template```配置文件是使用[HashiCorp Configuration Language (HCL)](https://github.com/hashicorp/hcl)编写的.这意味着```Consul Template```是和JSON兼容的,查看更多信息请查看 [HCL 规范](https://github.com/hashicorp/hcl)
+```Consul-Template``` 配置文件是使用[HashiCorp Configuration Language (HCL)](https://github.com/hashicorp/hcl)编写的.这意味着```Consul Template``` 是和JSON兼容的,查看更多信息请查看 [HCL 规范](https://github.com/hashicorp/hcl)
 
 配置文件语法支持上面的所有的选项,除非在表格中进行标明.
 
